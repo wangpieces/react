@@ -1,0 +1,21 @@
+创建元素
+方法一：
+const element = (
+    <h1 className = 'greeting'>
+        hello world
+    </h1>
+);
+方法二：
+const element = React.createElement(
+    'h1',
+    {className : 'greeting'},
+    'hello world'
+);
+方法三：
+const element = {
+    type : 'h1',
+    props : {
+       className : 'greeting',
+       children : 'hello world'
+    }
+}
