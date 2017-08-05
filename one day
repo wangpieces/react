@@ -19,3 +19,19 @@ const element = {
        children : 'hello world'
     }
 }
+
+
+更新创建的元素：react元素被创建后，则无法被修改，如果想要修改这个元素，则是从新创建该元素
+function test(){
+  const element = (
+      <div>
+          <h1>current time is {new Date().toLocaleTimeString()}</h1>
+      </div>
+  );
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+}
+
+setInterval(test,1000);
