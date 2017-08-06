@@ -35,3 +35,58 @@ function test(){
 }
 
 setInterval(test,1000);
+
+自定义组件：
+方法一：js函数
+function Welcome(props){
+    return <h1>hello,{props.greeting}</h1>
+}
+
+方法二
+class Welcome extends React.Component {
+   render(){
+        return <h1>hello,{this.props.greeting}</h1>;
+   }
+}
+
+用法：
+const element = (
+      <div>
+         <Welcome greeting="world"/><h1>current time is {new Date().toLocaleTimeString()}</h1>
+      </div>
+ );
+ 
+ 注意:自定义组件使用大写字母开头，<div/>表示一个标签，<Welcome/>表示一个组件
+
+自定义组件嵌套使用：
+function App(){
+  return (
+      <div>
+          <Welcome greeting='one'/>
+          <Welcome greeting='two'/>
+          <Welcome greeting='three'/>
+      </div>
+  );
+}
+用法：
+ ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+ );
+  
+注意：组件必须返回一个根元素，例如上面的App（）中必须要用<div>包裹
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
