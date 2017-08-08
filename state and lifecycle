@@ -92,7 +92,23 @@
   5.如果Clock从DOM节点上被删除了，react会调用componentWillUnmount()方法结束这个什么周期，并停止时钟更新
   
   
-  
+  正确的使用state属性：
+  使用state有3点需要注意
+  1.不要直接修改state属性，例如this.state.comment = 'hello'，而应该使用this.setState({comment:'hello'});
+    唯一你可以这么做的地方就是在构造函数里。
+  2.state的改变可能是异步的
+    下面这种写法是不对的，
+    this.setState(
+        counter:this.state.counter + this.props.increment;
+    );
+    我们下面这种写法，将函数作为第一个参数，将props作为第二个参数
+    this.setState(prevState,props)=>({counter:prevState.counter + .props.increment});
+    或者也可以使用常规的函数进行处理
+    this.setState(function(prevState,props){
+        return(
+            counter:prevState.counter + props.increment;
+        );
+    });
   
   
   
