@@ -1,0 +1,110 @@
+状态和生命周期：
+  状态和属性（props）是很相似的，只不过state是组件的私有属性，完全由组件控制
+  为了使用state这个私有属性，定义组件时使用class方式
+  function方式：
+  function Clock(props){
+      <div>
+          <h1>hello,world</h1>
+          <h1>current time is {props.date.toLocaleTimeString()}<h1>
+      <div>
+  }
+ // 将function方式转换为class实现方式
+  class Clock extends React.Component{
+      render(){
+          return(
+             <div>
+                <h1>hello,world</h1>
+                <h2>current time is{this.props.date.toLocaleTimeString()}<h2>
+             <div>
+          );
+      }
+  }
+  
+  //在class中添加本地state属性和构造方法
+  class Clock extends React.Component{
+      //添加构造方法
+      constructor(props){
+          super(props);//初始化基类的构造方法，类组件无论何时都应该使用props初始化基类的构造方法
+          this.state = {date:new Date()};
+      }
+      
+      render(){
+          return(
+              <div>
+                  <h1>hello,world</h1>
+                  <h2>current time is {this.state.date.toLocaleTimeString()}</h2>
+              </div>
+          );
+      }
+  }
+  
+  //调用：
+  ReactDOM.render(
+      <Clock />,
+      document.getElementById('root')
+  );
+  
+  
+  在类组件中添加一些特殊的方法：
+  class Clock extends React.Component{
+      constructor(props){
+          super(props);
+          this.state = {date:new Date()};
+      }
+      
+      //装载时间mount
+      componentDidMount(){
+          this.timeID = setInterval(()=>this.tick(),1000);
+      }
+       //卸载时间unmount
+      componentWillUnmount(){
+          clearInterval(this.timeID);
+      }
+      
+      tick(){
+          //使用setState更新本地的state状态
+          this.setState({date:new Date()});
+      }
+    
+      render(){
+          return(
+              <div>
+                  <h1>hello world</h1>
+                  <h2>current tiem is {this.state.date.toLocaleTimeString()}</h2>
+              </div>
+          );
+      }
+  }
+  
+  //调用：
+  ReactDOM.render(
+      <Clock />,
+      document.getElementById('root');
+  );
+  
+  通过上面的方法，一个时钟组件就完成了，上面实现的一个调用过程如下：
+  1.首先调用ReactDOM,render()方法时，react会去调用Clock的构造方法，这时使用当前时间初始化this.state;
+  2.接着react会去调用时钟组件里面的render()方法，显示当前时间
+  3.当时钟在输出插入到DOM节点，这时候react就回去调用componentDidMount()方法，而这时候react就回去调用
+    每秒调用tick()方法一次
+  4.tick()方法每秒都会被调用，这时候就会去调用setState()方法去更新state的值，当state的值改变是，react
+    就会去调用Clock组件里面的render()方法将更新的时间展示在DOM节点上
+  5.如果Clock从DOM节点上被删除了，react会调用componentWillUnmount()方法结束这个什么周期，并停止时钟更新
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
