@@ -109,7 +109,36 @@
             counter:prevState.counter + props.increment;
         );
     });
-  
+    
+    3.state合并更新
+      当调用setState()时，react会将当前的对象合并到到state中。例如下面的例子，state中可能包含几个独立变量
+      constructor(props){
+          super(props);
+          this.state = {
+              posts = [],
+              comments = []
+          };
+      }
+      
+      紧接着可以单独的调用setState()方法来更新他们
+      componentDidMount(){
+          fetchPosts().then(response => {
+              this.setState({
+                posts:response.posts
+              });
+          });
+          
+          fetchComments().then(response => {
+              this.setState({
+                comments:response.comments
+              });
+          });
+      }
+      
+      
+      The Data Flows Down后面没看懂，回头再看
+      
+   
   
   
   
