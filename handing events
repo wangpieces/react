@@ -1,0 +1,26 @@
+事件处理：
+  react事件处理和DOM的事件处理很相似，但是还是有很多不同的地方
+  1)react事件类型命名方法按照驼峰命名法
+    HTML:onclick   React:onClick
+  2)react事件传递的时候是通过函数的形式传递的，而不是字符串
+    HTML事件：
+     <button onclick="activateLasers()">Activate Lasers</button>
+   React事件：
+     <button onClick={activateLasers}> Activate Lasers</button>
+   3)React事件不能通过返回false来终止默认的事件响应，必须要显示的调用preventDefault()方法
+     HTML事件：
+      <a href="#" onclick="console.log('The link was clicked.'); return false">Click me</a>
+     React事件：
+      function ActionLink(){
+          function handeClick(e){
+              e.preventDefault();
+              console.log('The link was clicked.');
+          }
+          
+          return(
+              <a href="#" onClick={handeClick}>Click Me</a>
+          );
+      }
+      
+ 
+      
