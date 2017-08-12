@@ -22,5 +22,40 @@
           );
       }
       
+ react创建在创建节点是是不需要添加addEventListener 进行事件监听的，只需要在元素被初始化时展示时监听即可
+ class Toggle extends React.Component{
+      constructor(props){
+          super(props);
+          this.state = {isToggleOn:true}
+          //This binding is necessary to make `this` work in the callback
+          this.handleClick = this.handleClick.bind(this);
+      }
+      
+      handleClick(){
+          this.setState(prevState => ({
+              isToggleOn:!prevState.isToggleOn
+          }));
+      }
+      
+      render(){
+          return(
+             <button onClick={handleClick}>
+                {this.state.isToggleOn ? 'ON' : 'OFF'}
+             </button>
+          );
+      }
+ }
  
+ ReactDOM.render(
+    <Toggle />,
+    document.getElementById('root')
+ )
+      
+ 
+      
+      
+      
+      
+      
+      
       
