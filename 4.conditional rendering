@@ -1,1 +1,25 @@
-条件渲染
+条件渲染：
+   react中的条件渲染和js中的条件渲染是一样的，可以通过if语句或条件运算符进行判断需要渲染那个组件
+   function UserGreeting(props){
+      return <h1>hello welcome!</h1>
+   }
+   
+   function GuestGreeting(props){
+      return <h1>Please Sign up</h1>
+   }
+   
+   function Greeting(){
+      const isLoggedIn = props.isLoggedIn;
+      if(isLoggedIn){
+          return <UserGreeting />;
+      }else{
+          return <GuestGreeting />;
+      }
+   }
+   
+   ReactDOM.render(
+      <Greeting isLoggedIn={true}/>,
+      document.getElementById('root')
+   );
+   
+   元素变量：
