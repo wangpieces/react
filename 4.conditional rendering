@@ -23,3 +23,69 @@
    );
    
    元素变量：
+   你可以使用一个变量存储一个元素，这可以使你有条件的渲染组件的一部分，而其他部分则不变。
+   请看以下两个组件：
+   function LoginButton(props){
+        return(
+            <button onClick={props.onClick}>login</button>
+        );
+   }
+   
+   function LogoutButton(props){
+        return(
+            <button onClick={props.onClick}>logout</button>
+        );
+   }
+   这两个组件除了展示信息不同之外，其他部分都是一样的，那么我们就可以使用以下的方法进行编码，在结合之前的Greeting方法，
+   
+   class LoginController extends React.Component{
+        constructor(props){
+            super(props);
+            this.handleLoginClick = this.handleLoginClick.bind(this);
+            this.handleLogoutClick = this.handleLogoutClick.bind(this);
+            this.state = {isLoggedIn : false};
+        }
+        
+        handleLoginClick(){
+            this.setState({isLoggedIn:true});
+        }
+        
+        handleLogoutClick(){
+            this.setState({isLoggedIn:false});
+        }
+        
+        render(){
+            const isLoggedIn = this.state.isLoggedIn;
+            let button = null;
+            if(isLoggedIn){
+                 button =<LoginButton onClick={this.handleLoginClick}/>
+            }else{
+                 button = <LogoutButton onClick={this.handleLogoutClick}/>
+            }
+            
+            return(
+                 <Creeting isLoggedIn={isLoggedIn}>
+                 {button}
+            );
+        }
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
