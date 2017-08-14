@@ -249,8 +249,20 @@ ReactDOM.render(
       );
   }
    
- 防止组件呈现：
-      
+ 阻止组件呈现：
+   只要返回null值既可，使用null值替代你想要渲染的结果
+   function WarningBannar(props){
+         if(!props.warn){
+               return null;
+         }
+         
+         return(
+               <div className="warning">
+                  warning!
+               </div>
+         );
+   }
+   返回结果虽然为null但是并不会影响组件生命周期方法的触发。
    
    
    
