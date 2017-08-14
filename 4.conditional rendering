@@ -70,12 +70,187 @@
         }
    }
    
+   ---------------------------
+   class LoginController extends React.Component{  
+      constructor(props){
+          super(props);
+          this.handleLoginClick = this.handleLoginClick.bind(this);
+          this.handleLogoutClick = this.handleLogoutClick.bind(this);
+          this.state = {isLoggedIn:true}
+      }
+  
+      handleLoginClick(){
+          this.setState({isLoggedIn:true});
+      }
+  
+      handleLogoutClick(){
+          this.setState({isLoggedIn:false});
+      }
+  
+      render(){
+          const isLoggedIn = this.state.isLoggedIn;
+          let button = null;
+          if(isLoggedIn){
+              button = <LoginButton onClick={this.handleLoginClick}/>;
+          }else{
+              button = <LogoutButton onClick={this.handleLogoutClick} />;
+          }
+        
+          return(
+              <div>
+                  <Greeting isLoggedIn={isLoggedIn}/>
+                  {button}
+              </div>
+          );
+        
+      }
+  
+}
+
+function UserGreeting(props){
+    return <h1>welcome back</h1>
+}
+
+function GuestGreeting(props){
+    return <h1>Please sign up</h1>
+}
+
+function Greeting(props){
+    const isLoggedIn = props.isLoggedIn;
+    if(isLoggedIn){
+        <UserGreeting />
+    }else{
+        <GuestGreeting />
+    }
+}
+
+function LoginButton(props){
+    return(
+       <button onClick={props.onClick}>login</button>
+    );
+}
+
+function LogoutButton(props){
+    return(
+        <button onClick={props.onClick}>Logout</button>
+    );
+}
+ReactDOM.render(
+    <LoginController />,
+    document.getElementById('root')
+)
    
+ 完整代码如下：
+---------------------------------------开始-----------------------------------------
+class LoginController extends React.Component{  
+      constructor(props){
+          super(props);
+          this.handleLoginClick = this.handleLoginClick.bind(this);
+          this.handleLogoutClick = this.handleLogoutClick.bind(this);
+          this.state = {isLoggedIn:true}
+      }
+  
+      handleLoginClick(){
+          this.setState({isLoggedIn:true});
+      }
+  
+      handleLogoutClick(){
+          this.setState({isLoggedIn:false});
+      }
+  
+      render(){
+          const isLoggedIn = this.state.isLoggedIn;
+          let button = null;
+          if(isLoggedIn){
+              button = <LogoutButton onClick={this.handleLogoutClick}/>;
+          }else{
+              button = <LoginButton onClick={this.handleLoginClick} />;
+          }
+        
+          return(
+              <div>
+                  <Greeting isLoggedIn={isLoggedIn}/>
+                  {button}
+              </div>
+          );
+        
+      }
+  
+}
+
+function UserGreeting(props){
+    return <h1>welcome back</h1>
+}
+
+function GuestGreeting(props){
+    return <h1>Please sign up</h1>
+}
+
+function Greeting(props){
+    const isLoggedIn = props.isLoggedIn;
+    if(isLoggedIn){
+        <UserGreeting />
+    }else{
+        <GuestGreeting />
+    }
+}
+
+function LoginButton(props){
+    return(
+       <button onClick={props.onClick}>login</button>
+    );
+}
+
+function LogoutButton(props){
+    return(
+        <button onClick={props.onClick}>Logout</button>
+    );
+}
+ReactDOM.render(
+    <LoginController />,
+    document.getElementById('root')
+)
+---------------------------------------结束-----------------------------------------
+
+ 使用逻辑&&操作符：
+   你可以在jxf中嵌入任何的表达式，包括js中逻辑运算符：
+   function MailBox(props){
+         const unreadMessage = props.unreadMessage;
+         return(
+            <div>
+               <h1>hello!</h1>
+               {unreadMessage.length > 0 && 
+                 <h2>
+                   You have {unreadMessages.length} unread messages.
+                 </h2>   
+               }
+             </div>
+          );
+   }
    
+   由于逻辑运算符的特性，如果左边的表达式为true则右边的表达式会继续执行，否则跳过。
+ 也可以使用三目表达式
    
+  render(){
+      const isLoggedIn = this.state.isLoggedId;
+      return(   
+         <div>
+              <h1>{isLoggedIn ? 'welcome back' : 'please sgin up'}</h1>
+         </div>
+      );
+  }
+  
+  render(){
+      const isLoggedIn = this.state.isLoggedIn;
+      return(
+            <div>
+                  {isLoggedIn ? (<LogoutButton onClick={props.onClick}/>) : (<LogintButton onClick={props.onClick}/>)}
+            </div>
+      );
+  }
    
-   
-   
+ 防止组件呈现：
+      
    
    
    
