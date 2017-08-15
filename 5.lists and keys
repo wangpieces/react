@@ -1,0 +1,181 @@
+Lists and keys：
+
+渲染多个组件
+  const numbers = [1,2,3,4,5];
+  const listItem = numbers.map( (number) => <li>{number}</li> );
+  
+  ReactDOM.render(
+      <ul>listItem</ul>,
+      document.getElementById('root')
+  );
+  
+ 基础列表组件：
+ function NumberList(props){
+      const numbers = props.numbers;
+      const listItems = numbers.map((number)=> <li>{number}</li>);
+      
+      return(
+          <ul>{listItems}</ul>
+      );
+ }
+ const numbers = [1,2,3,4,5];
+ ReactDOM.render(
+    <NumberList numbers={numbers} />,
+    document.getElementById('root')
+ );
+当执行这段代码的时候会有警告：列表信息必须提供key值才行，
+
+function NumberList(props){
+      const numbers = props.numbers;
+      const listItems = numbers.map((number)=>
+         <li key={number.toString()}>{number}</li>
+       );
+      
+      return(
+          <ul>{listItems}</ul>
+      );
+ }
+ const numbers = [1,2,3,4,5];
+ ReactDOM.render(
+    <NumberList numbers={numbers} />,
+    document.getElementById('root')
+ );
+ 
+ Key的作用：
+ 通过key，react可以知道组件是否有做修改，增加，删除等操作
+ 选择key的最好方法是使用一个字符串来唯一标识,通常使用数据中的ID作为标识
+ const listItem = numbers.map((todo) => 
+      <li key={todo.id}>{todo.data}</li>
+ );
+ 
+ 如果一个数据中没有id这个属性，那么你也可以使用index作为最后的选择
+ const listItem = numbers.map((number,index) =>
+    <li key={index}>{number}</li>
+ );
+ 如果你的数据是可以排序的，我们不建议使用index作为key,因为这会变的很慢
+ 
+ 用key提取组件：
+ key应该在数组的上下文中才是有意义的
+ 比如你提取了一个ListItem组件，那么应该保持key值是在<ListItem>上才是有意义的，如果是在他的根元素<li>上则是无意义的
+ 下面展示一个错误的代码：
+ function ListItem(props){
+    const value = props.value;
+    reutrn(
+        <li key={value.toString()}>{value}</li>
+    );
+ }
+ 
+ function NumberList(props){
+    const numbers = props.numbers;
+    const listItems = numbers.map((number)=>
+        <ListItem value={number} />
+    );
+    
+    return(
+        <ul>{ListItems}</ul>
+    );
+ }
+ 
+ 正确的代码应该是将key放在ListItem上：
+ function ListItem(props){
+      const value = props.value;
+      return(
+          <li>{value}</li>
+      );
+ }
+ 
+ function NumberList(props){
+    const numbers = props.numbers;
+    const listItems = numbers.map((number)=>
+        <ListItem key={number.toString} value={number} />
+    );
+    return(
+        <ul>{listItems}</ul>
+    );
+ }
+ 
+ key在同一数组中必须要独一无二，在不同的数组中可以相同，
+ function Blog(props){
+    const sidebar = (
+        <ul>
+            {props.posts.map((post)=>
+                <li key={post.id}>{post.title}</li>
+             )
+            }
+        </ul>
+    );
+    const context = props.posts.map((post)=>
+        <div key={post.id}>
+            <h1>{post.title}</h1>
+            <p>{post.context}</p>
+        </div>
+    );
+    
+    return(
+      <div>
+        {sidebar}<br/>
+        {context}
+      </div>
+    );
+ }
+ 
+ const posts = [
+  {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+  {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+ ];
+ ReactDOM.render(
+  <Blog posts={posts} />,
+  document.getElementById('root')
+ );
+ 
+ key最为react的一个提示(hit),他并不会传递到组件上去，如果你想要获取和key一样的的值，那你可以设置其他属性来实现
+ const context = props.posts((post)=>
+    <div key={post.id} id={post.id} title={post.title}>
+        <h1>{post.title}</h1>
+        <p>{post.context}</p>
+    </div>
+ );
+ 在以上的代码中，该组件可以读取到id属性的值，而读取不到key的值
+ 
+ 在jsx中嵌入map()：
+ function NumberList(props){
+    const numbers = props.numbers;
+    const listItems = numbers.map((number)=>
+        <ListItem key={number.toString} value={number} />
+    );
+    
+    return(
+        <ul>{listItems}</ul>
+    );
+ }
+ 在jsx的{}中可以写任何表达式，所以上面的写法可以如下：
+ function NumberList(props){
+    const numbers = props.numbers;
+    return(
+        <ul>
+          {numbers.map((number)=>
+              <ListItem key={number.toString()} value={number}/>
+           )
+          }
+        </ul>
+    );
+ }
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
