@@ -1,0 +1,62 @@
+受控组件：
+  class NameForm extends React.Component{
+      constructor(props){
+          super(props);
+          this.handleChange = this.handleChange.bind(this);
+          this.handleSubmit = this.handleSubmit.bind(this);
+          this.state = {value : ''};
+      }
+      
+      handleChange(event){
+          this.setState({value : event.target.value});
+      }
+      
+      handleSubmit(event){
+          alert('Yout input value:'+event.target.value);
+          event.preventDefault();
+      }
+      render(){
+        return(
+            <form onSubmit={this.handleSubmit}>
+                <label>name:<input value={this.state.value} onChange={this.handleChange} /></label>
+                <input type="submit" value="submit"/>
+            </form>
+        );
+      }
+  }
+  
+  textArea标签：
+    在html标签中textarea的用法是<textarea></textarea>
+    而在react中的用法和input的用法相似，使用value属性
+    render(){
+        return(
+            <form>
+                <label>name:<textarea value={this.state.value} onChange={this.handleChange}/></label>
+            </form>
+            <input type="submit" value="submit"/>
+        );
+    }
+    
+   select标签：
+   在html中select用法如下
+   <select>
+      option value="grapefruit">Grapefruit</option>
+      <option value="lime">Lime</option>
+      <option selected value="coconut">Coconut</option>
+      <option value="mango">Mango</option>
+   </select>
+   在html选项中选择默认选项是使用selected属性的，而在react中是使用value属性，且这个value属性是作用在根元素select上的，
+   这对于受控组件来说将会更加的方便，因为只需要修改一个地方即可。
+   <select value={this.state.value} onChange={this.handleChange}>
+      option value="grapefruit">Grapefruit</option>
+      <option value="lime">Lime</option>
+      <option value="coconut">Coconut</option>
+      <option value="mango">Mango</option>
+   </select>
+   
+   这样一来，input,textarea,select使用起来将会非常的相似了。
+   
+   处理多个input：
+   
+  
+  
