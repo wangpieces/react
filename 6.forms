@@ -57,6 +57,43 @@
    这样一来，input,textarea,select使用起来将会非常的相似了。
    
    处理多个input：
-   
+  当您需要处理多个受控input元素时，您可以在每个元素添加一个name属性，让处理函数根据event.target.name值选择该做什么。
+  class Reservation extends React.Component{
+      constrouctor(props){
+          super(props);
+          this.state = {isGoging:true,numberOfGuests:2}
+          this.handleInputChange = this.handleInputChange.bind(this);
+      }
+      
+      handleInputChange(event){
+          const target = event.target;
+          const value = target.type == 'checkbox'? target.checked : target.value;
+          const name = event.name;
+          this.setState({
+              [name] : value
+          });
+      }
+      
+      render(){
+          return(
+              <form>
+                  <label>
+                      Is Going:<input name="isGoging" type="checkbox" checked={this.state.isGoging} onChange={this.handleInputChange}/>
+                  </label>
+                  <br/>
+                  <label>
+                    Number of guests:<input type="number" value={this.state.numberOfGuests} onChange={this.handleInputChange} />
+                  </label>
+              </form>
+          )
+      }
+      
+  }
+ ReactDOM.render(
+    <Reservation />,
+    document.getElementById('root')
+);
+  
+
   
   
