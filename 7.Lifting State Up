@@ -1,1 +1,117 @@
+Lifting State Up（状态解除?我也不清楚TM到底讲什么鬼）
+看例子：一个计算水是否开了的温度计算器
+  function BoilingVerdict(props){
+      if(props.celsius >= 100){
+         return <p>The water would boil.</p>;
+      } 
+      return <p>The water would not boil.</p>;
+   }
 
+class Calculator extends React.Componenet{
+    constructor(props){
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {temperature :''}
+    }
+    
+    handleChange(e){
+        this.setState({temprature:e.target.value});
+    }
+    
+    render(){
+        const temperature = this.state.temperature;
+        return(
+            <fieldset>
+                 <legend>Enter temperature in Celsius:</legend>
+                 <input value={temperature} onChange={this.handleChange} />
+                 <BoilingVerdict celsius={temperature}/>
+            </fieldset>
+        );
+    }
+}
+
+Adding a Second Input(在增加一个输入框)：
+    现在有一个新需求，就是增加一个华氏温度输入框，且华氏温度和摄氏度之间要能够实现同步：
+    我们首先从Calculator中提取一个TemperatureInput 组件,我们在这组件中新增一个新的属性，他的值可以是c或者f
+    const scaleNames ={
+        c: 'Celsius',
+        f: 'Fahrenheit'
+    }
+    
+    class TemperatureInput extends React.Component{
+        constructor(props){
+            super(props);
+            this.handleChange = this.handleChange.bind(this);
+            this.state ={temperature:''}
+        }
+        
+        handleChange(e){
+            this.setState({temperature:e.target.value});
+        }
+        
+        render(){
+            const temperature = this.state.temperature;
+            const scale = this.props.scale;
+            return(
+                 <fieldset>
+                    <legend>Enter temperature in {scaleNames[scale]}:</legend>
+                    <input value={temperature} onChange={this.handleChange} />
+                 </fieldset>
+            );
+        }
+    }
+    
+    class Calculator extends React.Component{
+        render(){
+            return(
+                <div>
+                    <TemperatureInput scale="c"/>
+                    <TemperatureInput scale="f"/>
+                </div>
+            );
+        }
+    }
+    
+    ReactDOM.render(
+        <Calculator />,
+        document.getElementById('root')
+    );
+    如果我们执行以上代码会发现这并没有实现华氏温度和摄氏度之间的一个同步，
+    也没有在calculator中展示BoilingVerdict 的值，为了实现华氏温度和摄氏度之间的转换，
+    我们实现温度转换函数：
+    //华氏温度转为摄氏度
+    function toCelsius(fahrenheit){
+        return (fahrenheit - 32) * 5 / 9;
+    }
+    //摄氏度转为华氏温度
+    function toFahrenheit(celsius) {
+      return (celsius * 9 / 5) + 32;
+    }
+    接下来我们再写一个函数，这个函数接收一个字符串类型的温度值，和转换函数作为参数，返回值为字符串：
+    function tryConvert(temperature,convert){
+        const input = parseFloat(temperature);
+        if(Number.isNaN(input)){
+            return '';
+        }
+        
+        const output = convert(input);
+        const rounded = Math.round(output * 1000) / 1000;
+        return rounded.toString();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
