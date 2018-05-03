@@ -98,6 +98,8 @@ Adding a Second Input(在增加一个输入框)：
         const rounded = Math.round(output * 1000) / 1000;
         return rounded.toString();
     }
+	
+	addddddd
     
     
     
